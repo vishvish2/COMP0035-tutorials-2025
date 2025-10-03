@@ -24,6 +24,7 @@ xlsx_file = Path(__file__).parent.parent.joinpath('data', 'paralympics_all_raw.x
 # else:
 #     print("CSV file not found.")
 
+# Dataframes
 df_csv = pd.read_csv(csv_file)
 df_xlsx_games = pd.read_excel(xlsx_file)
 df_xlsx_codes = pd.read_excel(xlsx_file, sheet_name="team_codes")
