@@ -10,7 +10,8 @@ csv_file = Path(__file__).parent.parent.joinpath('data', 'paralympics_raw.csv')
 csv_file_v2 = Path(__file__).parent.parent / 'data' / 'paralympics_raw.csv'
 
 # paralympics_all_raw.xlsx filepath
-xlsx_file = Path(__file__).parent.parent.joinpath('data', 'paralympics_all_raw.xlsx')
+xlsx_file = Path(__file__).parent.parent. \
+    joinpath('data', 'paralympics_all_raw.xlsx')
 
 # Check if the file exists
 # if csv_file.exists():
@@ -24,10 +25,22 @@ xlsx_file = Path(__file__).parent.parent.joinpath('data', 'paralympics_all_raw.x
 # else:
 #     print("CSV file not found.")
 
-# Dataframes
+# Dataframes (xlsx file has multiple sheets)
+
+# csv file
 df_csv = pd.read_csv(csv_file)
+
+# games sheet
 df_xlsx_games = pd.read_excel(xlsx_file)
+
+# team codes sheet
 df_xlsx_codes = pd.read_excel(xlsx_file, sheet_name="team_codes")
+
+# standings sheet
 df_xlsx_standings = pd.read_excel(xlsx_file, sheet_name="medal_standings")
+
+# summer sheet
 df_xlsx_summer = pd.read_excel(xlsx_file, sheet_name="games-team-summer")
+
+# winter sheet
 df_xlsx_winter = pd.read_excel(xlsx_file, sheet_name="games-team-winter")
