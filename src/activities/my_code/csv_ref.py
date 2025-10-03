@@ -1,6 +1,25 @@
 from pathlib import Path
 import pandas as pd
 
+
+def describe_df(df):
+    """Summary or description of the function
+
+        Parameters:
+        df (DataFrame): pandas dataframe to describe
+
+        Returns:
+        str: Information describing the dataframe e.g.
+            - shape
+            - First 5 rows and columns
+            - Column labels
+            - Column data types
+            - Info
+            - Results of describe
+
+    """
+
+
 # This script is located in a subfolder so you need to navigate up to the
 # parent (src) and then its parent (project root), then down to the 'data'
 # directory and finally the .csv file
