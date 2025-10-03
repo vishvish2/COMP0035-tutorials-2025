@@ -48,6 +48,21 @@ def missing_vals(df):
     return missing_rows
 
 
+def plot_hist(df):
+    """Plots a histogram of numerical data in the dataframe
+
+        Parameters:
+        df (DataFrame): pandas dataframe to analyse
+
+        Returns:
+        None
+
+    """
+    columns = ["participants_m", "participants_f"]
+    df[columns].hist()
+    plt.show()
+
+
 # This script is located in a subfolder so you need to navigate up to the
 # parent (src) and then its parent (project root), then down to the 'data'
 # directory and finally the .csv file
@@ -98,8 +113,6 @@ dataframes = [df_csv, df_xlsx_games, df_xlsx_codes]
 
 if __name__ == "__main__":
 
-    describe_df(df_csv)
-
     for frame in dataframes:
         describe_df(frame)
 
@@ -108,6 +121,4 @@ if __name__ == "__main__":
         print(missing_vals(frame2))
 
     for frame3 in dataframes:
-        columns = ["participants_m", "participants_f"]
-        frame3[columns].hist()
-        plt.show()
+        plot_hist(frame3)
