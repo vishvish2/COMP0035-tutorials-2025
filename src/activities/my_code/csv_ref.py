@@ -63,6 +63,21 @@ def plot_hist(df):
     plt.show()
 
 
+def plot_boxplot(df):
+    """Plots a boxplot of numerical data in the dataframe
+
+        Parameters:
+        df (DataFrame): pandas dataframe to analyse
+
+        Returns:
+        None
+
+    """
+    # columns = ["participants_m", "participants_f"]
+    df.boxplot()
+    plt.show()
+
+
 # This script is located in a subfolder so you need to navigate up to the
 # parent (src) and then its parent (project root), then down to the 'data'
 # directory and finally the .csv file
@@ -108,7 +123,7 @@ df_xlsx_summer = pd.read_excel(xlsx_file, sheet_name="games-team-summer")
 df_xlsx_winter = pd.read_excel(xlsx_file, sheet_name="games-team-winter")
 
 # List of dataframes
-dataframes = [df_csv, df_xlsx_games, df_xlsx_codes]
+dataframes = [df_csv, df_xlsx_games]
 
 if __name__ == "__main__":
 
@@ -121,3 +136,5 @@ if __name__ == "__main__":
 
     for frame3 in dataframes:
         plot_hist(frame3)
+
+    plot_boxplot(df_csv)
