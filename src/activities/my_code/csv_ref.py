@@ -1,5 +1,6 @@
 from pathlib import Path
 import pandas as pd
+import matplotlib.pyplot as plt
 
 
 def describe_df(df):
@@ -31,7 +32,7 @@ def missing_vals(df):
         df (DataFrame): pandas dataframe to search
 
         Returns:
-        missing (dataFrame): pandas dataframe with rows which have
+        missing (DataFrame): pandas dataframe with rows which have
                                 missing values
 
     """
@@ -105,3 +106,8 @@ if __name__ == "__main__":
     print("No. of missing values in each dataframe:")
     for frame2 in dataframes:
         print(missing_vals(frame2))
+
+    for frame3 in dataframes:
+        columns = ["participants_m", "participants_f"]
+        frame3[columns].hist()
+        plt.show()
