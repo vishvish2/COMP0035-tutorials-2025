@@ -9,15 +9,18 @@ def describe_df(df):
         df (DataFrame): pandas dataframe to describe
 
         Returns:
-        str: Information describing the dataframe e.g.
-            - shape
-            - First 5 rows and columns
-            - Column labels
-            - Column data types
-            - Info
-            - Results of describe
+        None
 
     """
+    pd.set_option("display.max_columns", None)
+
+    print(df.shape)     # No. of rows and cols
+    print(df.head(5))   # First 5 rows
+    print(df.tail(5))   # Last 5 rows
+    print(df.columns)   # Column labels
+    print(df.dtypes)    # Column data types
+    print(df.info)      # Info about dataframe
+    print(df.describe)  # Descriptive statistics
 
 
 # This script is located in a subfolder so you need to navigate up to the
@@ -25,6 +28,7 @@ def describe_df(df):
 # directory and finally the .csv file
 # paralympics_raw.csv filepath
 csv_file = Path(__file__).parent.parent.joinpath('data', 'paralympics_raw.csv')
+
 # also works
 csv_file_v2 = Path(__file__).parent.parent / 'data' / 'paralympics_raw.csv'
 
@@ -63,3 +67,14 @@ df_xlsx_summer = pd.read_excel(xlsx_file, sheet_name="games-team-summer")
 
 # winter sheet
 df_xlsx_winter = pd.read_excel(xlsx_file, sheet_name="games-team-winter")
+
+# List of dataframes
+dataframes = [df_csv, df_xlsx_games, df_xlsx_codes, df_xlsx_standings,
+              df_xlsx_summer, df_xlsx_winter]
+
+if __name__ == "__main__":
+
+    # describe_df(df_csv)
+
+    for frame in dataframes:
+        describe_df(frame)
