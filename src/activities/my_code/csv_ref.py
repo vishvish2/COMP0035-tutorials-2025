@@ -3,7 +3,7 @@ import pandas as pd
 
 
 def describe_df(df):
-    """Summary or description of the function
+    """Outputs information about a pandas dataframe
 
         Parameters:
         df (DataFrame): pandas dataframe to describe
@@ -21,6 +21,30 @@ def describe_df(df):
     print(df.dtypes)    # Column data types
     print(df.info)      # Info about dataframe
     print(df.describe)  # Descriptive statistics
+
+
+def missing_vals(df):
+    """Outputs number of missing values in a pandas dataframe
+        Create new dataframe with missing values
+
+        Parameters:
+        df (DataFrame): pandas dataframe to search
+
+        Returns:
+        missing (dataFrame): pandas dataframe with rows which have
+                                missing values
+
+    """
+    nan_count = 0                   # Null value counter
+    for item in df:                 # Iterate through columns
+        for entry in df.isna()[item]:
+            if entry:               # Iterate through each row in column
+                nan_count += 1      # True = null value
+    print(nan_count)
+
+    missing_rows = df[df.isna().any(axis=1)]
+
+    return missing_rows
 
 
 # This script is located in a subfolder so you need to navigate up to the
@@ -69,12 +93,15 @@ df_xlsx_summer = pd.read_excel(xlsx_file, sheet_name="games-team-summer")
 df_xlsx_winter = pd.read_excel(xlsx_file, sheet_name="games-team-winter")
 
 # List of dataframes
-dataframes = [df_csv, df_xlsx_games, df_xlsx_codes, df_xlsx_standings,
-              df_xlsx_summer, df_xlsx_winter]
+dataframes = [df_csv, df_xlsx_games, df_xlsx_codes]
 
 if __name__ == "__main__":
 
-    # describe_df(df_csv)
+    describe_df(df_csv)
 
     for frame in dataframes:
         describe_df(frame)
+
+    print("No. of missing values in each dataframe:")
+    for frame2 in dataframes:
+        print(missing_vals(frame2))
