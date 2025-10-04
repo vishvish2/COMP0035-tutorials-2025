@@ -106,11 +106,12 @@ def identify_categorical(df, col):
 
     """
     print(f"Distinct categorical values in the event '{col}' column")
-    print(f"{df[col].unique()}")
+    print(f"{df[col].unique()}")    # Unique categories in the column
 
     print(f"\nCount of each distinct categorical value in the event '{col}' \
 column")
     print(f"{df[col].value_counts()}")
+    # Count of each unique category in the columns
 
 
 def prep_data(df):
@@ -178,17 +179,17 @@ if __name__ == "__main__":
     for frame in dataframes:
         describe_df(frame)
 
-    print("No. of missing values in each dataframe:")
-    for frame2 in dataframes:
-        print(missing_vals(frame2))
+    # print("No. of missing values in each dataframe:")
+    # for frame2 in dataframes:
+    #     print(missing_vals(frame2))
 
-    for frame3 in dataframes:
-        plot_hist(frame3)
+    # for frame3 in dataframes:
+    #     plot_hist(frame3)
 
-    plot_boxplot(df_csv)
+    # plot_boxplot(df_csv)
 
-    plot_time_series(df_csv, "year", "participants_m")
-    plot_time_series(df_csv, "year", "participants_f")
+    # plot_time_series(df_csv, "year", "participants_m")
+    # plot_time_series(df_csv, "year", "participants_f")
 
-    identify_categorical(df_csv, 'type')
-    identify_categorical(df_csv, 'disabilities_included')
+    # identify_categorical(df_csv, 'type')
+    # identify_categorical(df_csv, 'disabilities_included')
