@@ -265,6 +265,19 @@ def prep_data(df, cols, rows, col_1, data_1, col_2, data_2, cols_2, d_type,
 
 
 def add_col_subtraction(df, col_name, col_1, col_2):
+    """Add column to dataframe but subtraction between entries in two
+    other columns
+
+        Parameters:
+        df (DataFrame): pandas dataframe to modify
+        col_name (str): name of new columns
+        col_1 (str): name of first column
+        col_2 (str): name of second column to subtract entries from first
+
+        Returns:
+        None
+
+    """
     duration_values = (df[col_2] - df[col_1]).dt.days.astype('Int64')
     df.insert(df.columns.get_loc(col_2) + 1, col_name, duration_values)
 
