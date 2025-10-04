@@ -177,7 +177,7 @@ def remove_whitespace(df, col, data):
     df.at[index, col] = data.strip()
 
 
-def prep_data(df):
+def prep_data(df, cols, rows, col_1, data_1, col_2, data_2):
     """Plots a line chart of numerical data against time in a dataframe
 
         Parameters:
@@ -187,7 +187,20 @@ def prep_data(df):
         prepped_df (DataFrame): refined dataframe (e.g. no missing columns)
 
     """
-    pass
+    # Remove specified columns
+    prepped_df = remove_df_cols(df, cols)
+
+    # Remove specified rows
+    prepped_df = remove_df_rows(df, rows)
+
+    # Decapitalise specified column for consistency
+    # decapitalise(prepped_df, col_1, data_1)
+    # ^ Index 0 had 'Summer' in type and was removed before hence causes error
+
+    # Remove whitespaces in specified column for consistency
+    remove_whitespace(prepped_df, col_2, data_2)
+
+    return prepped_df
 
 
 # This script is located in a subfolder so you need to navigate up to the
@@ -260,21 +273,15 @@ if __name__ == "__main__":
     # identify_categorical(df_csv, 'type')
     # identify_categorical(df_csv, 'disabilities_included')
 
-    # Removing unwanted columns
-    df_csv_prepared = \
-        remove_df_cols(df_csv, ['URL', 'disabilities_included', 'highlights'])
+    df_csv_prepared = prep_data(df_csv,
+                                ['URL', 'disabilities_included', 'highlights'],
+                                [0, 17, 31],
+                                'type', 'Summer', 'type', 'winter ')
 
     # print(df_csv.columns)
     # print(df_csv_prepared.columns)
 
-    # print(df_csv_prepared.head(3))
-    df_csv_prepared = remove_df_rows(df_csv_prepared, [0, 17, 31])
     # print(df_csv_prepared.head(3))  # Double checking drop worked
     # missing_vals(df_csv_prepared)   # Double checking rows with NaN are gone
 
-    # decapitalise(df_csv_prepared, 'type', 'Summer')
-    # #^ Index 0 had 'Summer' in type and was removed before hence causes error
-
-    # Remove whitespaces for consistency in 'type' columns
-    remove_whitespace(df_csv_prepared, 'type', 'winter ')
-    print(df_csv_prepared['type'].unique())     # Double checking
+    # print(df_csv_prepared['type'].unique())     # Double checking
