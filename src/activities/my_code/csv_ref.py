@@ -94,6 +94,25 @@ def plot_time_series(df, start, participants):
     plt.show()
 
 
+def identify_categorical(df, col):
+    """Identifies categorical data in a specified column of a dataframe
+
+        Parameters:
+        df (DataFrame): pandas dataframe to analyse
+        col (str): Which column of the dataframe to analyse
+
+        Returns:
+        None
+
+    """
+    print(f"Distinct categorical values in the event '{col}' column")
+    print(f"{df[col].unique()}")
+
+    print(f"\nCount of each distinct categorical value in the event '{col}' \
+column")
+    print(f"{df[col].value_counts()}")
+
+
 # This script is located in a subfolder so you need to navigate up to the
 # parent (src) and then its parent (project root), then down to the 'data'
 # directory and finally the .csv file
@@ -143,17 +162,20 @@ dataframes = [df_csv, df_xlsx_games]
 
 if __name__ == "__main__":
 
-    # for frame in dataframes:
-    #     describe_df(frame)
+    for frame in dataframes:
+        describe_df(frame)
 
-    # print("No. of missing values in each dataframe:")
-    # for frame2 in dataframes:
-    #     print(missing_vals(frame2))
+    print("No. of missing values in each dataframe:")
+    for frame2 in dataframes:
+        print(missing_vals(frame2))
 
-    # for frame3 in dataframes:
-    #     plot_hist(frame3)
+    for frame3 in dataframes:
+        plot_hist(frame3)
 
-    # plot_boxplot(df_csv)
+    plot_boxplot(df_csv)
 
     plot_time_series(df_csv, "year", "participants_m")
     plot_time_series(df_csv, "year", "participants_f")
+
+    identify_categorical(df_csv, 'type')
+    identify_categorical(df_csv, 'disabilities_included')
