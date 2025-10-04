@@ -114,6 +114,21 @@ column")
     # Count of each unique category in the columns
 
 
+def remove_df_cols(df, cols):
+    """Plots a removes specified columns from a dataframe
+
+        Parameters:
+        df (DataFrame): pandas dataframe to analyse
+
+        Returns:
+        df_prepared (DataFrame): New dataframe with specified columns removed
+
+    """
+
+    df_prepared = df.drop(columns=cols)
+    return df_prepared
+
+
 def prep_data(df):
     """Plots a line chart of numerical data against time in a dataframe
 
@@ -179,17 +194,22 @@ if __name__ == "__main__":
     for frame in dataframes:
         describe_df(frame)
 
-    # print("No. of missing values in each dataframe:")
-    # for frame2 in dataframes:
-    #     print(missing_vals(frame2))
+    print("No. of missing values in each dataframe:")
+    for frame2 in dataframes:
+        print(missing_vals(frame2))
 
-    # for frame3 in dataframes:
-    #     plot_hist(frame3)
+    for frame3 in dataframes:
+        plot_hist(frame3)
 
-    # plot_boxplot(df_csv)
+    plot_boxplot(df_csv)
 
-    # plot_time_series(df_csv, "year", "participants_m")
-    # plot_time_series(df_csv, "year", "participants_f")
+    plot_time_series(df_csv, "year", "participants_m")
+    plot_time_series(df_csv, "year", "participants_f")
 
-    # identify_categorical(df_csv, 'type')
-    # identify_categorical(df_csv, 'disabilities_included')
+    identify_categorical(df_csv, 'type')
+    identify_categorical(df_csv, 'disabilities_included')
+
+    df_csv_prepared = \
+        remove_df_cols(df_csv, ['URL', 'disabilities_included', 'highlights'])
+    print(df_csv.columns)
+    print(df_csv_prepared.columns)
