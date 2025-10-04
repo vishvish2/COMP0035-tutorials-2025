@@ -183,6 +183,7 @@ def change_cols_dtype(df, cols, d_type):
         Parameters:
         df (DataFrame): pandas dataframe to analyse
         cols (list): list of cols to modify
+        d_type (str): data type to change the column to
 
         Returns:
         df_prepared_2 (DataFrame): new dataframe with specified columns removed
