@@ -200,7 +200,7 @@ def object_to_date(df, cols):
 
         Parameters:
         df (DataFrame): pandas dataframe to analyse
-        cols (list): list of cols to modify
+        cols (list): list of columns to modify
 
         Returns:
         None
@@ -212,13 +212,22 @@ def object_to_date(df, cols):
 
 def prep_data(df, cols, rows, col_1, data_1, col_2, data_2, cols_2, d_type,
               cols_3):
-    """Plots a line chart of numerical data against time in a dataframe
+    """Cleaning a dataframe for analysis
 
         Parameters:
         df (DataFrame): pandas dataframe to analyse
+        cols (list): columns to remove
+        rows (list): rows to remove
+        col_1 (str): column to decapitalise entries of
+        data_1 (str): data entries to decapitalise
+        col_2 (str): column to remove whitespaces from entries of
+        data_2 (str): data entries to remove whitespaces from
+        cols_2 (list): columns to modify data type of
+        d_type (str): data type to change the columns to cols_2 to
+        cols_3 (list): columns to change from `object` data type to datetime
 
         Returns:
-        prepped_df (DataFrame): refined dataframe (e.g. no missing columns)
+        prepped_df (DataFrame): refined dataframe
 
     """
     # Remove specified columns
@@ -253,6 +262,11 @@ def prep_data(df, cols, rows, col_1, data_1, col_2, data_2, cols_2, d_type,
     change_cols_dtype(prepped_df, [new_cols], 'str')
 
     return prepped_df
+
+
+def add_col_subtraction(df, col_name, col_1, col_2):
+    duration_values = (df[col_2] - df[col_1]).dt.days.astype('Int64')
+    df.insert(df.columns.get_loc(col_2) + 1, col_name, duration_values)
 
 
 # This script is located in a subfolder so you need to navigate up to the
@@ -344,11 +358,16 @@ if __name__ == "__main__":
     # print(df_csv_prepared['type'].unique())
 
     # Double checking data type modification worked
-    print(df_csv.dtypes)
-    print(df_csv_prepared.dtypes)
+    # print(df_csv.dtypes)
+    # print(df_csv_prepared.dtypes)
 
     # print(df_csv['start'])
     # print(df_csv_prepared['start'])
 
     # print(df_csv['end'])
     # print(df_csv_prepared['end'])
+
+    add_col_subtraction(df_csv_prepared, 'duration', 'start', 'end')
+
+    # print(df_csv.columns)
+    # print(df_csv_prepared.columns)
