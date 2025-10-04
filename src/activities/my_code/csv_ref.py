@@ -126,6 +126,7 @@ def remove_df_cols(df, cols):
     """
 
     df_prepared = df.drop(columns=cols)
+
     return df_prepared
 
 
@@ -142,6 +143,7 @@ def remove_df_rows(df, rows):
     """
     df = df.reset_index(drop=True)
     df_prepared_2 = df.drop(index=rows)
+
     return df_prepared_2
 
 
@@ -193,7 +195,23 @@ def change_cols_dtype(df, cols, d_type):
         df[col] = df[col].astype(d_type)
 
 
-def prep_data(df, cols, rows, col_1, data_1, col_2, data_2, cols_2, d_type):
+def object_to_date(df, cols):
+    """Changes object data type to datetime
+
+        Parameters:
+        df (DataFrame): pandas dataframe to analyse
+        cols (list): list of cols to modify
+
+        Returns:
+        None
+
+    """
+    for col in cols:
+        df[col] = pd.to_datetime(df[col], format='%d/%m/%Y')    # DD/MM/YYY
+
+
+def prep_data(df, cols, rows, col_1, data_1, col_2, data_2, cols_2, d_type,
+              cols_3):
     """Plots a line chart of numerical data against time in a dataframe
 
         Parameters:
@@ -221,6 +239,18 @@ def prep_data(df, cols, rows, col_1, data_1, col_2, data_2, cols_2, d_type):
 
     # Change data type of specified columns
     change_cols_dtype(prepped_df, cols_2, d_type)
+
+    # Make columns with date datetime datatype instead of object
+    object_to_date(prepped_df, cols_3)
+
+    # Change remaining object data type columns to string data type
+    new_cols = []
+
+    for col in prepped_df:
+        if str(prepped_df[col].dtype) == 'object':
+            new_cols.append(col)
+
+    change_cols_dtype(prepped_df, [new_cols], 'str')
 
     return prepped_df
 
@@ -300,7 +330,8 @@ if __name__ == "__main__":
                                 [0, 17, 31],
                                 'type', 'Summer', 'type', 'winter ',
                                 ['countries', 'events', 'participants_m',
-                                 'participants_f', 'participants'], 'int')
+                                 'participants_f', 'participants'], 'int',
+                                ['start', 'end'])
 
     # print(df_csv.columns)
     # print(df_csv_prepared.columns)
@@ -317,4 +348,7 @@ if __name__ == "__main__":
     print(df_csv_prepared.dtypes)
 
     # print(df_csv['start'])
-    # print(df_csv['end'].dtype)
+    # print(df_csv_prepared['start'])
+
+    # print(df_csv['end'])
+    # print(df_csv_prepared['end'])
