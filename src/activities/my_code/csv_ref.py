@@ -177,7 +177,7 @@ def remove_whitespace(df, col, data):
     df.at[index, col] = data.strip()
 
 
-def change_cols_dtype(df, cols):
+def change_cols_dtype(df, cols, d_type):
     """Applies a fixed data type to specified columns
 
         Parameters:
@@ -189,10 +189,10 @@ def change_cols_dtype(df, cols):
 
     """
     for col in cols:
-        df[col] = df[col].astype('int')
+        df[col] = df[col].astype(d_type)
 
 
-def prep_data(df, cols, rows, col_1, data_1, col_2, data_2, cols_2):
+def prep_data(df, cols, rows, col_1, data_1, col_2, data_2, cols_2, d_type):
     """Plots a line chart of numerical data against time in a dataframe
 
         Parameters:
@@ -219,7 +219,7 @@ def prep_data(df, cols, rows, col_1, data_1, col_2, data_2, cols_2):
     remove_whitespace(prepped_df, col_2, data_2)
 
     # Change data type of specified columns
-    change_cols_dtype(prepped_df, cols_2)
+    change_cols_dtype(prepped_df, cols_2, d_type)
 
     return prepped_df
 
@@ -299,7 +299,7 @@ if __name__ == "__main__":
                                 [0, 17, 31],
                                 'type', 'Summer', 'type', 'winter ',
                                 ['countries', 'events', 'participants_m',
-                                 'participants_f', 'participants'])
+                                 'participants_f', 'participants'], 'int')
 
     # print(df_csv.columns)
     # print(df_csv_prepared.columns)
@@ -312,5 +312,8 @@ if __name__ == "__main__":
     # print(df_csv_prepared['type'].unique())
 
     # Double checking data type modification worked
-    # print(df_csv.dtypes)
-    # print(df_csv_prepared.dtypes)
+    print(df_csv.dtypes)
+    print(df_csv_prepared.dtypes)
+
+    # print(df_csv['start'])
+    # print(df_csv['end'].dtype)
