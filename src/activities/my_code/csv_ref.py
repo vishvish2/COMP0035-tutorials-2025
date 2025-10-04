@@ -82,8 +82,8 @@ def plot_time_series(df, start, participants):
 
         Parameters:
         df (DataFrame): pandas dataframe to analyse
-        start (str): Which column for x axis data (usually time)
-        participants (str): Which columns for y axis data
+        start (str): which column for x axis data (usually time)
+        participants (str): which columns for y axis data
 
         Returns:
         None
@@ -98,7 +98,7 @@ def identify_categorical(df, col):
 
         Parameters:
         df (DataFrame): pandas dataframe to analyse
-        col (str): Which column of the dataframe to analyse
+        col (str): which column of the dataframe to analyse
 
         Returns:
         None
@@ -118,10 +118,10 @@ def remove_df_cols(df, cols):
 
         Parameters:
         df (DataFrame): pandas dataframe to analyse
-        cols (list): List of columns to remove
+        cols (list): list of columns to remove
 
         Returns:
-        df_prepared (DataFrame): New dataframe with specified columns removed
+        df_prepared (DataFrame): new dataframe with specified columns removed
 
     """
 
@@ -134,10 +134,10 @@ def remove_df_rows(df, rows):
 
         Parameters:
         df (DataFrame): pandas dataframe to analyse
-        rows (list): List of rows to remove
+        rows (list): list of rows to remove
 
         Returns:
-        df_prepared_2 (DataFrame): New dataframe with specified columns removed
+        df_prepared_2 (DataFrame): new dataframe with specified columns removed
 
     """
     df = df.reset_index(drop=True)
@@ -184,7 +184,7 @@ def prep_data(df):
         df (DataFrame): pandas dataframe to analyse
 
         Returns:
-        prepped_df (DataFrame): Refined dataframe (e.g. no missing columns)
+        prepped_df (DataFrame): refined dataframe (e.g. no missing columns)
 
     """
     pass
