@@ -113,6 +113,19 @@ column")
     print(f"{df[col].value_counts()}")
 
 
+def prep_data(df):
+    """Plots a line chart of numerical data against time in a dataframe
+
+        Parameters:
+        df (DataFrame): pandas dataframe to analyse
+
+        Returns:
+        prepped_df (DataFrame): Refined dataframe (e.g. no missing columns)
+
+    """
+    pass
+
+
 # This script is located in a subfolder so you need to navigate up to the
 # parent (src) and then its parent (project root), then down to the 'data'
 # directory and finally the .csv file
