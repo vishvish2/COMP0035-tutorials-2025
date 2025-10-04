@@ -177,7 +177,22 @@ def remove_whitespace(df, col, data):
     df.at[index, col] = data.strip()
 
 
-def prep_data(df, cols, rows, col_1, data_1, col_2, data_2):
+def change_cols_dtype(df, cols):
+    """Applies a fixed data type to specified columns
+
+        Parameters:
+        df (DataFrame): pandas dataframe to analyse
+        cols (list): list of cols to modify
+
+        Returns:
+        df_prepared_2 (DataFrame): new dataframe with specified columns removed
+
+    """
+    for col in cols:
+        df[col] = df[col].astype('int')
+
+
+def prep_data(df, cols, rows, col_1, data_1, col_2, data_2, cols_2):
     """Plots a line chart of numerical data against time in a dataframe
 
         Parameters:
@@ -194,11 +209,17 @@ def prep_data(df, cols, rows, col_1, data_1, col_2, data_2):
     prepped_df = remove_df_rows(df, rows)
 
     # Decapitalise specified column for consistency
-    # decapitalise(prepped_df, col_1, data_1)
+    try:
+        decapitalise(prepped_df, col_1, data_1)
+    except IndexError:
+        pass
     # ^ Index 0 had 'Summer' in type and was removed before hence causes error
 
     # Remove whitespaces in specified column for consistency
     remove_whitespace(prepped_df, col_2, data_2)
+
+    # Change data type of specified columns
+    change_cols_dtype(prepped_df, cols_2)
 
     return prepped_df
 
@@ -276,7 +297,9 @@ if __name__ == "__main__":
     df_csv_prepared = prep_data(df_csv,
                                 ['URL', 'disabilities_included', 'highlights'],
                                 [0, 17, 31],
-                                'type', 'Summer', 'type', 'winter ')
+                                'type', 'Summer', 'type', 'winter ',
+                                ['countries', 'events', 'participants_m',
+                                 'participants_f', 'participants'])
 
     # print(df_csv.columns)
     # print(df_csv_prepared.columns)
@@ -284,4 +307,10 @@ if __name__ == "__main__":
     # print(df_csv_prepared.head(3))  # Double checking drop worked
     # missing_vals(df_csv_prepared)   # Double checking rows with NaN are gone
 
-    # print(df_csv_prepared['type'].unique())     # Double checking
+    # Double checking decapitalising and whitespace removal
+    # print(df_csv['type'].unique())
+    # print(df_csv_prepared['type'].unique())
+
+    # Double checking data type modification worked
+    # print(df_csv.dtypes)
+    # print(df_csv_prepared.dtypes)
