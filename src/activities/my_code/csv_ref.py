@@ -186,7 +186,7 @@ def change_cols_dtype(df, cols, d_type):
         d_type (str): data type to change the column to
 
         Returns:
-        df_prepared_2 (DataFrame): new dataframe with specified columns removed
+        None
 
     """
     for col in cols:
