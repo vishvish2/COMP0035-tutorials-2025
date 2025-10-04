@@ -278,6 +278,9 @@ csv_file = Path(__file__).parent.parent.joinpath('data', 'paralympics_raw.csv')
 # also works
 csv_file_v2 = Path(__file__).parent.parent / 'data' / 'paralympics_raw.csv'
 
+# NPC codes
+csv_file_npc = Path(__file__).parent.parent.joinpath('data', 'npc_codes.csv')
+
 # paralympics_all_raw.xlsx filepath
 xlsx_file = Path(__file__).parent.parent. \
     joinpath('data', 'paralympics_all_raw.xlsx')
@@ -297,6 +300,10 @@ xlsx_file = Path(__file__).parent.parent. \
 
 # csv file
 df_csv = pd.read_csv(csv_file)
+
+# npc csv files
+df_csv_npc = pd.read_csv(csv_file_npc, encoding='utf-8',
+                         encoding_errors='ignore', usecols=['Code', 'Name'])
 
 # games sheet
 df_xlsx_games = pd.read_excel(xlsx_file)
@@ -371,3 +378,12 @@ if __name__ == "__main__":
 
     # print(df_csv.columns)
     # print(df_csv_prepared.columns)
+
+    # print(df_csv_prepared['duration'])
+
+    # print(df_csv_npc)
+
+    df_merged = df_csv.merge(df_csv_npc, how='left', left_on='country',
+                             right_on='Name')
+
+    print(df_merged[['country', 'Code', 'Name']])
