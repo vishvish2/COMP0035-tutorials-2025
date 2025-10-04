@@ -134,7 +134,7 @@ def remove_df_rows(df, rows):
 
         Parameters:
         df (DataFrame): pandas dataframe to analyse
-        rows (list): List of rowes to remove
+        rows (list): List of rows to remove
 
         Returns:
         df_prepared_2 (DataFrame): New dataframe with specified columns removed
@@ -143,6 +143,38 @@ def remove_df_rows(df, rows):
     df = df.reset_index(drop=True)
     df_prepared_2 = df.drop(index=rows)
     return df_prepared_2
+
+
+def decapitalise(df, col, data):
+    """Decapitalise specified string entries in specified column
+
+        Parameters:
+        df (DataFrame): pandas dataframe to analyse
+        col (str): column to analyse
+        data (str): specific data entry to decapitalise
+
+        Returns:
+        None
+
+    """
+    index = df.query(f"{col} == @data").index[0]
+    df.at[index, col] = data.lower()
+
+
+def remove_whitespace(df, col, data):
+    """Remove whitespaces in specified string entries in specified column
+
+        Parameters:
+        df (DataFrame): pandas dataframe to analyse
+        col (str): column to analyse
+        data (str): specific data entry to remove whtiespaces from
+
+        Returns:
+        None
+
+    """
+    index = df.query(f"{col} == @data").index[0]
+    df.at[index, col] = data.strip()
 
 
 def prep_data(df):
@@ -207,26 +239,26 @@ dataframes = [df_csv, df_xlsx_games]
 
 if __name__ == "__main__":
 
-    for frame in dataframes:
-        describe_df(frame)
+    # for frame in dataframes:
+    #     describe_df(frame)
 
-    print("No. of missing values in each dataframe:")
-    for frame2 in dataframes:
-        print(missing_vals(frame2))
-    print(missing_vals(df_csv))
+    # print("No. of missing values in each dataframe:")
+    # for frame2 in dataframes:
+    #     print(missing_vals(frame2))
+    # print(missing_vals(df_csv))
 
-    for frame3 in dataframes:   # Histograms
-        plot_hist(frame3)
+    # for frame3 in dataframes:   # Histograms
+    #     plot_hist(frame3)
 
-    plot_boxplot(df_csv)        # Boxplots
+    # plot_boxplot(df_csv)        # Boxplots
 
-    # Line charts
-    plot_time_series(df_csv, "year", "participants_m")
-    plot_time_series(df_csv, "year", "participants_f")
+    # # Line charts
+    # plot_time_series(df_csv, "year", "participants_m")
+    # plot_time_series(df_csv, "year", "participants_f")
 
     # Finding categorical data based on columns
-    identify_categorical(df_csv, 'type')
-    identify_categorical(df_csv, 'disabilities_included')
+    # identify_categorical(df_csv, 'type')
+    # identify_categorical(df_csv, 'disabilities_included')
 
     # Removing unwanted columns
     df_csv_prepared = \
@@ -235,7 +267,14 @@ if __name__ == "__main__":
     # print(df_csv.columns)
     # print(df_csv_prepared.columns)
 
-    print(df_csv_prepared.head(3))
+    # print(df_csv_prepared.head(3))
     df_csv_prepared = remove_df_rows(df_csv_prepared, [0, 17, 31])
-    print(df_csv_prepared.head(3))  # Double checking drop worked
-    missing_vals(df_csv_prepared)   # Double checking rows with NaN are gone
+    # print(df_csv_prepared.head(3))  # Double checking drop worked
+    # missing_vals(df_csv_prepared)   # Double checking rows with NaN are gone
+
+    # decapitalise(df_csv_prepared, 'type', 'Summer')
+    # #^ Index 0 had 'Summer' in type and was removed before hence causes error
+
+    # Remove whitespaces for consistency in 'type' columns
+    remove_whitespace(df_csv_prepared, 'type', 'winter ')
+    print(df_csv_prepared['type'].unique())     # Double checking
