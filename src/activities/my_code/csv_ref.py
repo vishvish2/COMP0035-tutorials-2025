@@ -282,6 +282,22 @@ def add_col_subtraction(df, col_name, col_1, col_2):
     df.insert(df.columns.get_loc(col_2) + 1, col_name, duration_values)
 
 
+def save_csv(filename, df):
+    """Saves a dataframe as a .csv file
+
+        Parameters:
+        filename (str): name of the file to save the dataframe as
+        df (DataFrame): pandas dataframe to save
+
+        Returns:
+        df (DataFrame): pandas dataframe to save
+
+    """
+    df.to_csv(filename, index=False)
+
+    return df
+
+
 # This script is located in a subfolder so you need to navigate up to the
 # parent (src) and then its parent (project root), then down to the 'data'
 # directory and finally the .csv file
@@ -399,4 +415,6 @@ if __name__ == "__main__":
     df_merged = df_csv.merge(df_csv_npc, how='left', left_on='country',
                              right_on='Name')
 
-    print(df_merged[['country', 'Code', 'Name']])
+    # print(df_merged[['country', 'Code', 'Name']])
+
+    df_csv_prepared = save_csv("prepared_paralympics.csv", df_csv_prepared)
