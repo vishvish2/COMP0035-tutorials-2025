@@ -44,7 +44,6 @@ def missing_vals(df):
     print(nan_count)
 
     missing_rows = df[df.isna().any(axis=1)]
-
     return missing_rows
 
 
@@ -119,6 +118,7 @@ def remove_df_cols(df, cols):
 
         Parameters:
         df (DataFrame): pandas dataframe to analyse
+        cols (list): List of columns to remove
 
         Returns:
         df_prepared (DataFrame): New dataframe with specified columns removed
@@ -127,6 +127,22 @@ def remove_df_cols(df, cols):
 
     df_prepared = df.drop(columns=cols)
     return df_prepared
+
+
+def remove_df_rows(df, rows):
+    """Plots a removes specified rows from a dataframe
+
+        Parameters:
+        df (DataFrame): pandas dataframe to analyse
+        rows (list): List of rowes to remove
+
+        Returns:
+        df_prepared_2 (DataFrame): New dataframe with specified columns removed
+
+    """
+    df = df.reset_index(drop=True)
+    df_prepared_2 = df.drop(index=rows)
+    return df_prepared_2
 
 
 def prep_data(df):
@@ -197,19 +213,29 @@ if __name__ == "__main__":
     print("No. of missing values in each dataframe:")
     for frame2 in dataframes:
         print(missing_vals(frame2))
+    print(missing_vals(df_csv))
 
-    for frame3 in dataframes:
+    for frame3 in dataframes:   # Histograms
         plot_hist(frame3)
 
-    plot_boxplot(df_csv)
+    plot_boxplot(df_csv)        # Boxplots
 
+    # Line charts
     plot_time_series(df_csv, "year", "participants_m")
     plot_time_series(df_csv, "year", "participants_f")
 
+    # Finding categorical data based on columns
     identify_categorical(df_csv, 'type')
     identify_categorical(df_csv, 'disabilities_included')
 
+    # Removing unwanted columns
     df_csv_prepared = \
         remove_df_cols(df_csv, ['URL', 'disabilities_included', 'highlights'])
-    print(df_csv.columns)
-    print(df_csv_prepared.columns)
+
+    # print(df_csv.columns)
+    # print(df_csv_prepared.columns)
+
+    print(df_csv_prepared.head(3))
+    df_csv_prepared = remove_df_rows(df_csv_prepared, [0, 17, 31])
+    print(df_csv_prepared.head(3))  # Double checking drop worked
+    missing_vals(df_csv_prepared)   # Double checking rows with NaN are gone
