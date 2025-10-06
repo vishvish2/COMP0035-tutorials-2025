@@ -21,7 +21,7 @@ def describe_df(df):
     print(df.columns)   # Column labels
     print(df.dtypes)    # Column data types
     print(df.info)      # Info about dataframe
-    print(df.describe)  # Descriptive statistics
+    print(df.describe())  # Descriptive statistics
 
 
 def missing_vals(df):
