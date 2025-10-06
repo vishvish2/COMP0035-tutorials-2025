@@ -365,7 +365,8 @@ if __name__ == "__main__":
     # for frame3 in dataframes:   # Histograms
     #     plot_hist(frame3)
 
-    # plot_boxplot(df_csv)        # Boxplots
+    df_csv.plot.box()
+    plt.show()       # Boxplots
 
     # # Line charts
     # plot_time_series(df_csv, "year", "participants_m")
