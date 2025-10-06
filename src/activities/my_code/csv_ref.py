@@ -20,7 +20,7 @@ def describe_df(df):
     print(df.tail(5))   # Last 5 rows
     print(df.columns)   # Column labels
     print(df.dtypes)    # Column data types
-    print(df.info)      # Info about dataframe
+    print(df.info())      # Info about dataframe
     print(df.describe())  # Descriptive statistics
 
 
