@@ -200,9 +200,10 @@ paralympics_datafile_csv = files("tutorialpkg.data").joinpath("paralympics_event
 
 In the Python module you created earlier add code to locate the data file `paralmpics_raw.csv`.
 
-Try using `pathlib.Path` and the `importlib.resources` approach.
+Try using `pathlib.Path` and the `importlib.resources` approach i.e. do the activity twice using a different approach
+each time.
 
-Optionally, you can check you can access the file by opening and printing a line:
+_Optionally_, check you can access the file by opening and printing a line e.g.:
 
 ```python
 import csv
@@ -217,6 +218,6 @@ if __name__ == '__main__':
 
 ```
 
-You can delete the csv reader code once you've demonstrated your file is accessed.
+Delete the csv reader code once you've demonstrated your file is accessed. You won't be using `csv` to read the files.
 
 [Next activity](2-02-pandas-df)

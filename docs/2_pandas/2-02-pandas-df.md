@@ -10,7 +10,7 @@ used for the tutorial activities.
 
 In the activities you will be describing and exploring a dataset, and then preparing it for used in a scenario.
 
-## Read: Pandas DataFrame overview
+## Pandas DataFrame overview
 
 You may have seen spreadsheets that contain data in rows and columns, where the columns represent variables and
 the rows the values of those variables for a particular instance.
@@ -29,7 +29,7 @@ You can create a pandas DataFrame in a number of ways -
 see [pandas documentation](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html). In this course you will
 typically create it by reading data that is stored in a `.csv` or `.xlsx` file.
 
-## Activity: Read .csv and .xlsx into a DataFrame
+## ACTIVITY: Read .csv and .xlsx into a DataFrame
 
 There are two data files in the `src/activities/data/` package:
 
