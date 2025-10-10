@@ -352,7 +352,8 @@ df_xlsx_winter = pd.read_excel(xlsx_file, sheet_name="games-team-winter")
 # List of dataframes
 dataframes = [df_csv, df_xlsx_games]
 
-if __name__ == "__main__":
+
+def main():
 
     # for frame in dataframes:
     #     describe_df(frame)
@@ -365,8 +366,8 @@ if __name__ == "__main__":
     # for frame3 in dataframes:   # Histograms
     #     plot_hist(frame3)
 
-    df_csv.plot.box()
-    plt.show()       # Boxplots
+    # df_csv.plot.box()
+    # plt.show()       # Boxplots
 
     # # Line charts
     # plot_time_series(df_csv, "year", "participants_m")
@@ -419,3 +420,8 @@ if __name__ == "__main__":
     # print(df_merged[['country', 'Code', 'Name']])
 
     df_csv_prepared = save_csv("prepared_paralympics.csv", df_csv_prepared)
+    print(df_csv_prepared)
+
+
+if __name__ == "__main__":
+    main()
