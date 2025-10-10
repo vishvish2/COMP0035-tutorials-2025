@@ -32,7 +32,7 @@ def describe_df(df):
     print("")
 
     # Unique values
-    for col in df.columns:
+    for col in df:
         print(df[col].unique())
 
 
