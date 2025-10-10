@@ -419,8 +419,11 @@ def main():
 
     # print(df_merged[['country', 'Code', 'Name']])
 
-    df_csv_prepared = save_csv("src/activities/data/prepared_paralympics.csv", df_csv_prepared)
-    print(df_csv_prepared)
+    df_csv_prepared = save_csv("src/activities/data/prepared_paralympics.csv",
+                               df_csv_prepared)
+    # print(df_csv_prepared)
+
+    print(df_merged)
 
 
 if __name__ == "__main__":
