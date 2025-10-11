@@ -64,7 +64,7 @@ def main():
     sql_file = Path(__file__).parent.parent. \
         joinpath('db', 'paralympics_schema_starter.sql')
 
-    db_file_path = "src/activities/db/paralympics.sqlite"
+    db_file_path = "src/activities/db/paralympics.db"
 
     # Creating dataframes from excel file
     df_games, df_country_codes = read_data_to_df(xlsx_file)
