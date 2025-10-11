@@ -16,7 +16,7 @@ The `docs` folder contains the activity instructions for each week.
 The `src` package contains any starter code for each week. You can also use this package to store your own code
 that you create during the activities.
 
-One solution to the week's activities will be added to the [tutor_solution repository](). Other solutions will be
+One solution to the week's activities will be added to the [tutor_solution repository](https://github.com/nicholsons/comp0035-tutorials-solutions). Other solutions will be
 possible, and some may be better than the solution offered, so don't feel
 your code has to match the tutors code!
 
