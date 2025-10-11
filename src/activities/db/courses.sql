@@ -39,7 +39,7 @@ CREATE TABLE students
             int teacher_id FK
         }
 */
-CREATE TABLE course
+CREATE TABLE courses
 (
     id INTEGER PRIMARY KEY,
     course_name TEXT,
