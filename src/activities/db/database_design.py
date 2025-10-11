@@ -44,12 +44,16 @@ def create_db(sql_script_path, db_path):
         None
 
     """
+
+    # Creating cursor
     connection = sqlite3.connect(db_path)
     cursor = connection.cursor()
 
+    # Reading SQL file
     with open(sql_script_path, "r", encoding="utf-8") as f:
         sql_script = f.read()
 
+    # Executing SQL file
     cursor.executescript(sql_script)
     connection.commit()
     connection.close()
@@ -70,11 +74,10 @@ def main():
     df_games, df_country_codes = read_data_to_df(xlsx_file)
 
     # Describing dataframes
-    # describe_df(df_games)
-    # describe_df(df_country_codes)
+    describe_df(df_games)
+    describe_df(df_country_codes)
 
     # Create database
-    print(str(sql_file))
     create_db(sql_file, db_file_path)
 
 
