@@ -162,6 +162,26 @@ def insert_multiple_rows(db_path, table_name, cols, data_df):
     connection.close()  # Close the connection
 
 
+def delete_rows(db_path):
+    """Empties a database in specified path
+
+            Parameters:
+            db_path (str): file path to the database
+
+            Returns:
+            None
+    """
+    conn = sqlite3.connect(db_path)
+    cur = conn.cursor()
+    cur.execute("SELECT name FROM sqlite_master WHERE type='table' AND name"
+                " NOT LIKE 'sqlite_%';")
+    table_names = [row[0] for row in cur.fetchall()]
+    for table_name in table_names:
+        cur.execute(f"DELETE FROM {table_name}")
+    conn.commit()
+    conn.close()
+
+
 def main():
 
     # File paths
@@ -189,12 +209,16 @@ def main():
     describe_df(df_games)
     describe_df(df_country_codes)
 
-    # Create databases
+    # Create databases or clear them if existing
     if not os.path.exists(db_para_file_path):
         create_db(sql_file_para, db_para_file_path)
+    else:
+        delete_rows(db_para_file_path)
 
     if not os.path.exists(db_courses_file_path):
         create_db(sql_file_courses, db_courses_file_path)
+    else:
+        delete_rows(db_courses_file_path)
 
     # Inserting rows
     cols_to_insert_s = ['student_name', 'student_email']
@@ -207,11 +231,11 @@ def main():
     #            vals_to_insert)
 
     # Multiple rows
-    insert_multiple_rows(db_courses_file_path, "students", cols_to_insert_s,
+    insert_multiple_rows(db_courses_file_path, "student", cols_to_insert_s,
                          df_students)
-    insert_multiple_rows(db_courses_file_path, "teachers", cols_to_insert_t,
+    insert_multiple_rows(db_courses_file_path, "teacher", cols_to_insert_t,
                          df_students)
-    insert_multiple_rows(db_courses_file_path, "courses", cols_to_insert_c,
+    insert_multiple_rows(db_courses_file_path, "course", cols_to_insert_c,
                          df_students)
 
 

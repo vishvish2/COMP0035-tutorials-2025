@@ -9,7 +9,7 @@ PRAGMA foreign_keys = ON;
             string teacher_email
         }
 */
-CREATE TABLE teachers
+CREATE TABLE teacher
 (
     id INTEGER PRIMARY KEY,
     teacher_name TEXT,
@@ -23,7 +23,7 @@ CREATE TABLE teachers
             string student_email
         }
 */
-CREATE TABLE students
+CREATE TABLE student
 (
     id INTEGER PRIMARY KEY,
     student_name TEXT,
@@ -39,14 +39,14 @@ CREATE TABLE students
             int teacher_id FK
         }
 */
-CREATE TABLE courses
+CREATE TABLE course
 (
     id INTEGER PRIMARY KEY,
     course_name TEXT,
     course_code TEXT,
     course_schedule TEXT,
     course_location TEXT,
-    teacher_id INTEGER, FOREIGN KEY (teacher_id) REFERENCES teachers
+    teacher_id INTEGER, FOREIGN KEY (teacher_id) REFERENCES teacher
 );
 /*
         Classes{
@@ -55,11 +55,11 @@ CREATE TABLE courses
             int course_id FK
         }
 */
-CREATE TABLE classes
+CREATE TABLE enrollment
 (
     id INTEGER PRIMARY KEY,
     student_id INTEGER,
     course_id INTEGER,
-    FOREIGN KEY (student_id) REFERENCES students,
-    FOREIGN KEY (course_id) REFERENCES courses
+    FOREIGN KEY (student_id) REFERENCES student,
+    FOREIGN KEY (course_id) REFERENCES course
 );
