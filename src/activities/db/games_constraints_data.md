@@ -17,12 +17,12 @@ erDiagram
         string URL
     }
     Team {
-        string code PK "Must be 3 letters capitalised"
-        string name "Required"
-        string region "One of: 'Asia', 'Europe', 'Africa', 'America', 'Oceania', or can be empty if member type is construct"
-        string sub_region "One of: 'South, South-East', 'North, South, West', 'North', 'West, Central', 'Carribean, Central', 'South','East', 'Oceania', 'West','Central, East', or empty if MemberType is construct"
-        string member_type "Type of the competing team, one of: 'country', 'team', 'dissolved', 'construct'"
-        string notes "Any text notes on the record."
+        string code PK "NOT NULL, UNIQUE"
+        string name "NOT NULL"
+        string region "DEFAULT '', CHECK (type IN ('Asia', 'Europe', 'Africa', 'America', 'Oceania'))"
+        string sub_region "DEFAULT '', CHECK (type IN ('South, South-East', 'North, South, West', 'North', 'West, Central', 'Carribean, Central', 'South','East', 'Oceania', 'West','Central, East'))''"
+        string member_type "CHECK (type IN ('country', 'team', 'dissolved', 'construct'))"
+        string notes "DEFAULT ''"
         int country_id FK
     }
     Host {
