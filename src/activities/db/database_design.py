@@ -122,11 +122,12 @@ def insert_multiple_rows(db_path, table_name, cols, data_df):
             Returns:
             None
     """
-# Create a connection to the database using sqlite3
+    # Create a connection to the database using sqlite3
     connection = sqlite3.connect(db_path)
 
     # Cursor object to execute SQL commands
     cursor = connection.cursor()
+
     # Enable foreign key constraints for sqlite
     cursor.execute('PRAGMA foreign_keys = ON;')
 
@@ -226,6 +227,7 @@ def main():
     cols_to_insert_t = ['teacher_name', 'teacher_email']
     cols_to_insert_c = ["course_name", "course_code", "course_schedule",
                         "course_location"]
+
     # Single row
     # vals_to_insert = ['Alice Brown', 'alice.brown@school.com']
     # insert_row(db_courses_file_path, "students", cols_to_insert,
@@ -248,7 +250,9 @@ def main():
             (SELECT id FROM course WHERE course_name = ? AND course_code = ?),\
             (SELECT id FROM teacher WHERE teacher_email = ?)) \
     """
+
     for _, row in df_students.iterrows():
+
         cursor.execute(
             enrollment_sql,
             (
@@ -258,6 +262,7 @@ def main():
                 row['teacher_email'],
             )
         )
+
     connection.commit()
     connection.close()
 
