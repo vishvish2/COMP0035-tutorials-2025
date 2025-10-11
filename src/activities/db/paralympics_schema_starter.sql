@@ -58,10 +58,10 @@ PRAGMA foreign_keys = ON;
 CREATE TABLE games
 (
     id INTEGER PRIMARY KEY,
-    type TEXT, CHECK (type IN ('winter', 'summer')),
-    year INTEGER, CHECK (year BETWEEN 1960 AND 9999),
+    type TEXT CHECK (type IN ('winter', 'summer')),
+    year INTEGER CHECK (year BETWEEN 1960 AND 9999),
     start TEXT,
-    end TEXT, CHECK (end > start),
+    end TEXT CHECK (end > start),
     countries INTEGER,
     events INTEGER,
     sports INTEGER,
@@ -92,9 +92,9 @@ CREATE TABLE team
 (
     code TEXT PRIMARY KEY,
     name TEXT NOT NULL,
-    region TEXT, CHECK (region IN ('Asia', 'Europe', 'Africa', 'America', 'Oceania')),
+    region TEXT CHECK (region IN ('Asia', 'Europe', 'Africa', 'America', 'Oceania')),
     sub_region TEXT,
-    member_type TEXT, CHECK (member_type IN ('country', 'team', 'dissolved', 'construct')),
+    member_type TEXT CHECK (member_type IN ('country', 'team', 'dissolved', 'construct')),
     notes TEXT,
     country_id INTEGER, FOREIGN KEY (country_id) REFERENCES Country (id) ON UPDATE CASCADE ON DELETE SET NULL
 );
@@ -122,9 +122,10 @@ CREATE TABLE host (
 */
 CREATE TABLE gamesteam (
     id INTEGER PRIMARY KEY,
-    games_id INTEGER, FOREIGN KEY games_id REFERENCES games (id) ON UPDATE CASCADE ON DELETE CASCADE,
-    team_code TEXT, FOREIGN KEY team_code REFERENCES team (code) ON UPDATE CASCADE ON DELETE CASCADE
-
+    games_id INTEGER, 
+    team_code TEXT, 
+    FOREIGN KEY (games_id) REFERENCES games (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (team_code) REFERENCES team (code) ON UPDATE CASCADE ON DELETE CASCADE
 );
 /*
     GamesDisability {
@@ -135,8 +136,10 @@ CREATE TABLE gamesteam (
 */
 CREATE TABLE gamesdisability (
     id INTEGER PRIMARY KEY,
-    games_id INTEGER, FOREIGN KEY games_id REFERENCES games (id) ON UPDATE CASCADE ON DELETE CASCADE,
-    disability_id INTEGER, FOREIGN KEY disability_id REFERENCES host (id) ON UPDATE CASCADE ON DELETE CASCADE
+    games_id INTEGER, 
+    disability_id INTEGER, 
+    FOREIGN KEY (games_id) REFERENCES games (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (disability_id) REFERENCES host (id) ON UPDATE CASCADE ON DELETE CASCADE
 
 );
 /*
@@ -148,7 +151,9 @@ CREATE TABLE gamesdisability (
 */
 CREATE TABLE gameshost (
     id INTEGER PRIMARY KEY,
-    games_id INTEGER, FOREIGN KEY games_id REFERENCES games (id) ON UPDATE CASCADE ON DELETE CASCADE,
-    host_id INTEGER, FOREIGN KEY host_id REFERENCES disability (id) ON UPDATE CASCADE ON DELETE CASCADE
+    games_id INTEGER, 
+    host_id INTEGER, 
+    FOREIGN KEY (games_id) REFERENCES games (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (host_id) REFERENCES disability (id) ON UPDATE CASCADE ON DELETE CASCADE
 
 );

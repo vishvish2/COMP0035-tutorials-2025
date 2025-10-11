@@ -1,9 +1,6 @@
 from activities.starter.starter_db import read_data_to_df
 from pathlib import Path
-
-# paralympics_all_raw.xlsx filepath
-xlsx_file = Path(__file__).parent.parent. \
-    joinpath('data', 'paralympics_all_raw.xlsx')
+import sqlite3
 
 
 def describe_df(df):
@@ -36,14 +33,49 @@ def describe_df(df):
         print(df[col].unique())
 
 
+def create_db(sql_script_path, db_path):
+    """Creates a database based on an sql script in the specified file path
+
+        Parameters:
+        sql_scipt_path (str): File path to sql script
+        db_path (str): File path to store the database
+
+        Returns:
+        None
+
+    """
+    connection = sqlite3.connect(db_path)
+    cursor = connection.cursor()
+
+    with open(sql_script_path, "r", encoding="utf-8") as f:
+        sql_script = f.read()
+
+    cursor.executescript(sql_script)
+    connection.commit()
+    connection.close()
+
+
 def main():
+
+    # paralympics_all_raw.xlsx filepath
+    xlsx_file = Path(__file__).parent.parent. \
+        joinpath('data', 'paralympics_all_raw.xlsx')
+
+    sql_file = Path(__file__).parent.parent. \
+        joinpath('db', 'paralympics_schema_starter.sql')
+
+    db_file_path = "src/activities/db/paralympics.sqlite"
 
     # Creating dataframes from excel file
     df_games, df_country_codes = read_data_to_df(xlsx_file)
 
     # Describing dataframes
-    describe_df(df_games)
-    describe_df(df_country_codes)
+    # describe_df(df_games)
+    # describe_df(df_country_codes)
+
+    # Create database
+    print(str(sql_file))
+    create_db(sql_file, db_file_path)
 
 
 if __name__ == "__main__":
