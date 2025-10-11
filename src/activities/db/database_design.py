@@ -158,6 +158,7 @@ def insert_multiple_rows(db_path, table_name, cols, data_df):
 
     # Use `executemany()` with a parameterised query to add values to table.
     cursor.executemany(student_sql, student_data)
+
     connection.commit()  # Commit the changes
     connection.close()  # Close the connection
 
@@ -237,6 +238,28 @@ def main():
                          df_students)
     insert_multiple_rows(db_courses_file_path, "course", cols_to_insert_c,
                          df_students)
+
+    connection = sqlite3.connect(db_courses_file_path)
+    cursor = connection.cursor()
+
+    enrollment_sql = """
+    INSERT INTO enrollment (student_id, course_id, teacher_id)
+    VALUES ((SELECT id FROM student WHERE student_email = ?), \
+            (SELECT id FROM course WHERE course_name = ? AND course_code = ?),\
+            (SELECT id FROM teacher WHERE teacher_email = ?)) \
+    """
+    for _, row in df_students.iterrows():
+        cursor.execute(
+            enrollment_sql,
+            (
+                row['student_email'],
+                row['course_name'],
+                row['course_code'],
+                row['teacher_email'],
+            )
+        )
+    connection.commit()
+    connection.close()
 
 
 if __name__ == "__main__":

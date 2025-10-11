@@ -60,6 +60,8 @@ CREATE TABLE enrollment
     id INTEGER PRIMARY KEY,
     student_id INTEGER,
     course_id INTEGER,
+    teacher_id INTEGER,
     FOREIGN KEY (student_id) REFERENCES student,
-    FOREIGN KEY (course_id) REFERENCES course
+    FOREIGN KEY (course_id) REFERENCES course,
+    FOREIGN KEY (teacher_id) REFERENCES teacher
 );
