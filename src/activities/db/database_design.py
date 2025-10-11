@@ -59,6 +59,52 @@ def create_db(sql_script_path, db_path):
     connection.close()
 
 
+def insert_row(db_path, table_name, cols, vals):
+    """Inserts specified values in the specified columns of single row of a
+        specified database file
+
+            Parameters:
+            db_path (str): File path of the database
+            table_name (str): Name of table in the db to insert into
+            cols (list): list of columns to insert data into
+            vals (list): list of values to insert into respective columns
+                in cols
+
+            Returns:
+            None
+    """
+
+    # Create a connection to the database using sqlite3
+    connection = sqlite3.connect(db_path)
+
+    # Cursor object to execute SQL commands
+    cursor = connection.cursor()
+
+    # Enable foreign key constraints for sqlite
+    cursor.execute('PRAGMA foreign_keys = ON;')
+
+    # Define the SQL INSERT query
+    cols_str = ""
+    for i in range(len(cols)):
+        if i == (len(cols) - 1):
+            cols_str += f'{cols[i]}'
+        else:
+            cols_str += f'{cols[i]}, '
+
+    vals_str = ""
+    for i in range(len(vals)):
+        if i == (len(vals) - 1):
+            vals_str += f'"{vals[i]}"'
+        else:
+            vals_str += f'"{vals[i]}", '
+
+    insert_sql = f'INSERT INTO {table_name} ({cols_str}) VALUES ({vals_str})'
+
+    cursor.execute(insert_sql)  # Execute the insert query
+    connection.commit()  # Commit the changes
+    connection.close()  # Close the connection
+
+
 def main():
 
     # paralympics_all_raw.xlsx filepath
@@ -85,6 +131,12 @@ def main():
     # Create database
     create_db(sql_file_para, db_para_file_path)
     create_db(sql_file_courses, db_courses_file_path)
+
+    # Inserting a single row
+    cols_to_insert = ['student_name', 'student_email']
+    vals_to_insert = ['Alice Brown', 'alice.brown@school.com']
+    insert_row(db_courses_file_path, "students", cols_to_insert,
+               vals_to_insert)
 
 
 if __name__ == "__main__":
