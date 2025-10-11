@@ -26,6 +26,23 @@ def sample_select_queries(db_path):
     for row in rows:
         print(row)
 
+    # All rows and columns from course table
+    print("")
+    cur.execute('SELECT * FROM course')
+    rows_2 = cur.fetchall()
+    for row_2 in rows_2:
+        print(row_2)
+
+    # Course code for chemistry course
+    print("")
+    cur.execute('SELECT course_code FROM course WHERE course_name="Chemistry"')
+    print(cur.fetchall())
+
+    # Courses with monday in their schedule
+    print("")
+    cur.execute('SELECT * FROM course WHERE course_schedule LIKE "%Mon%"')
+    print(cur.fetchall())
+
     con.close()
 
 
