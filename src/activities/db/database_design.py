@@ -65,10 +65,15 @@ def main():
     xlsx_file = Path(__file__).parent.parent. \
         joinpath('data', 'paralympics_all_raw.xlsx')
 
-    sql_file = Path(__file__).parent.parent. \
+    sql_file_para = Path(__file__).parent.parent. \
         joinpath('db', 'paralympics_schema_starter.sql')
 
-    db_file_path = "src/activities/db/paralympics.db"
+    db_para_file_path = "src/activities/db/paralympics.db"
+
+    sql_file_courses = Path(__file__).parent.parent. \
+        joinpath('db', 'courses.sql')
+
+    db_courses_file_path = "src/activities/db/courses.db"
 
     # Creating dataframes from excel file
     df_games, df_country_codes = read_data_to_df(xlsx_file)
@@ -78,7 +83,8 @@ def main():
     describe_df(df_country_codes)
 
     # Create database
-    create_db(sql_file, db_file_path)
+    create_db(sql_file_para, db_para_file_path)
+    create_db(sql_file_courses, db_courses_file_path)
 
 
 if __name__ == "__main__":

@@ -82,9 +82,10 @@ CREATE TABLE country
         string description
     }
  */
-CREATE TABLE disability (
-        id INTEGER PRIMARY KEY,
-        description TEXT
+CREATE TABLE disability 
+(
+    id INTEGER PRIMARY KEY,
+    description TEXT
 
 );
 -- Team completed to show the FK syntax
@@ -107,7 +108,8 @@ CREATE TABLE team
 
  */
 
-CREATE TABLE host (
+CREATE TABLE host
+(
     id INTEGER PRIMARY KEY,
     place_name TEXT,
     country_id INTEGER, FOREIGN KEY (country_id) REFERENCES Country (id) ON UPDATE CASCADE ON DELETE SET NULL
@@ -120,7 +122,8 @@ CREATE TABLE host (
         str team_code FK "ON UPDATE CASCADE ON DELETE CASCADE"
     }
 */
-CREATE TABLE gamesteam (
+CREATE TABLE gamesteam
+(
     id INTEGER PRIMARY KEY,
     games_id INTEGER, 
     team_code TEXT, 
