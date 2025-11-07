@@ -25,13 +25,13 @@ class ParalympicEvent:
         self.classification = classification
         self.athletes = []  # Empty list to hold athlete names
 
-    def describe(self):
+    def describe(self) -> None:
         """ Describes the event """
         print(f"{self.name} is a {self.sport} event for classification"
               f" {self.classification}.")
         print("Athletes competing:", ", ".join(self.athletes))
 
-    def register_athlete(self, athlete_name):
+    def register_athlete(self, athlete_name: str) -> None:
         """ Register the athlete with the event
 
         Args:
@@ -67,14 +67,13 @@ class Athlete:
         self.disability_class = disability_class
         self.medals = medals  # Composition: Athlete has Medals
 
-    def __str__(self):
-        string = f"{self.first_name} {self.last_name} plays for"\
+    def __str__(self) -> str:
+        return f"{self.first_name} {self.last_name} plays for"\
             f" {self.team_code} with disability class {self.disability_class}"
-        return string
 
-    def introduce(self):
-        print(f"{self.first_name} {self.last_name} represents {self.team_code}"
-              f" in class {self.disability_class}.")
+    def introduce(self) -> str:
+        return f"{self.first_name} {self.last_name} represents "\
+            f"{self.team_code} in disability class {self.disability_class}."
 
 
 class Runner(Athlete):
@@ -83,7 +82,7 @@ class Runner(Athlete):
         super().__init__(first_name, last_name, team_code, disability_class)
         self.distance = distance  # e.g., 100m, 400m
 
-    def race_info(self):
+    def race_info(self) -> None:
         print(f"{self.first_name} is running the {self.distance} race.")
 
 
@@ -124,3 +123,4 @@ athlete = Athlete(
 )
 
 print(athlete)
+print(athlete.introduce())
