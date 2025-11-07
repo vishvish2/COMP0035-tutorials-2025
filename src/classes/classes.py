@@ -1,3 +1,8 @@
+from dataclasses import dataclass
+from datetime import date
+from typing import List
+
+
 class ParalympicEvent:
     """Represents a Paralympic event
 
@@ -14,7 +19,7 @@ class ParalympicEvent:
             describe(): Prints a description of the event
             register_athlete(): Adds an athlete to the list of athletes
     """
-    def __init__(self, name, sport, classification):
+    def __init__(self, name: str, sport: str, classification: str):
         self.name = name
         self.sport = sport
         self.classification = classification
@@ -35,6 +40,13 @@ class ParalympicEvent:
         self.athletes.append(athlete_name)
 
 
+@dataclass
+class Medal:
+    type: str
+    design: str
+    date_designed: date
+
+
 class Athlete:
     """Represents a Paralympic event
 
@@ -47,16 +59,32 @@ class Athlete:
         Methods:
     """
 
-    def __init__(self, name, team, disability):
-        self.name = name
-        self.team = team
-        self.disability = disability
+    def __init__(self, first_name: str, last_name: str, team_code: str,
+                 disability_class: str, medals: List[Medal]):
+        self.first_name = first_name
+        self.last_name = last_name
+        self.team_code = team_code
+        self.disability_class = disability_class
+        self.medals = medals  # Composition: Athlete has Medals
 
     def __str__(self):
-
-        string = f"{self.name} plays for {self.team} with {self.disability}"
-        " disability"
+        string = f"{self.first_name} {self.last_name} plays for"\
+            f" {self.team_code} with disability class {self.disability_class}"
         return string
+
+    def introduce(self):
+        print(f"{self.first_name} {self.last_name} represents {self.team_code}"
+              f" in class {self.disability_class}.")
+
+
+class Runner(Athlete):
+    def __init__(self, first_name: str, last_name: str, team_code: str,
+                 disability_class: str, distance: str):
+        super().__init__(first_name, last_name, team_code, disability_class)
+        self.distance = distance  # e.g., 100m, 400m
+
+    def race_info(self):
+        print(f"{self.first_name} is running the {self.distance} race.")
 
 
 event = ParalympicEvent(
@@ -75,5 +103,24 @@ event.register_athlete("Mo Farah")
 # Should print event again, "Athletes competing" should include the abov
 event.describe()
 
-athlete1 = Athlete("Bob C", "UK", "Paralysis")
-print(athlete1)
+# athlete1 = Athlete("Bob", "Guy", "UK", "Paralysis")
+# athlete1.introduce()
+
+# runner1 = Runner("Li", "Na", "CHN", "T12", "100m")
+# runner1.introduce()  # Inherited method
+# runner1.race_info()  # Subclass-specific method
+
+# Create medals
+medal1 = Medal("gold", "Paris 2024 design", date(2023, 7, 1))
+medal2 = Medal("silver", "Tokyo 2020 design", date(2019, 8, 25))
+
+# Create an athlete with medals
+athlete = Athlete(
+    first_name="Wei",
+    last_name="Wang",
+    team_code="CHN",
+    disability_class="T54",
+    medals=[medal1, medal2]
+)
+
+print(athlete)
