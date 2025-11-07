@@ -1,18 +1,19 @@
 class ParalympicEvent:
-    """ Represents a Paralympic event
+    """Represents a Paralympic event
 
-     Attributes:
-         name: A string representing the name of the event
-         sport: An integer representing the sport that the event belongs to
-         classification: An integer representing the event classification
-         athletes: A list of strings representing the athletes that compete in
-            the event
+        Attributes:
+            name (str): A string representing the name of the event
+            sport (str): A string representing the sport that the event
+                belongs to
+            classification (str): An string representing the event
+                classification
+            athletes (list): A list of strings representing the athletes that
+                compete in the event
 
-     Methods:
-         describe() Prints a description of the event
-         register_athlete() Adds an athlete to the list of athletes
-     """
-
+        Methods:
+            describe(): Prints a description of the event
+            register_athlete(): Adds an athlete to the list of athletes
+    """
     def __init__(self, name, sport, classification):
         self.name = name
         self.sport = sport
@@ -34,6 +35,30 @@ class ParalympicEvent:
         self.athletes.append(athlete_name)
 
 
+class Athlete:
+    """Represents a Paralympic event
+
+        Attributes:
+            name (str): A string representing the name of the athlete
+            team (str): A string representing the team the athlete plays for
+            disabilitity (str): A string representing any disabilities the
+                athlete has
+
+        Methods:
+    """
+
+    def __init__(self, name, team, disability):
+        self.name = name
+        self.team = team
+        self.disability = disability
+
+    def __str__(self):
+
+        string = f"{self.name} plays for {self.team} with {self.disability}"
+        " disability"
+        return string
+
+
 event = ParalympicEvent(
     name="100m Sprint",
     sport="Running",
@@ -49,3 +74,6 @@ event.register_athlete("Mo Farah")
 
 # Should print event again, "Athletes competing" should include the abov
 event.describe()
+
+athlete1 = Athlete("Bob C", "UK", "Paralysis")
+print(athlete1)
