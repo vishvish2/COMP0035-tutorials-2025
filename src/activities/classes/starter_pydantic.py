@@ -3,6 +3,7 @@ from datetime import date
 from enum import Enum
 
 from pydantic import BaseModel
+from pydantic import ValidationError
 
 
 # This is not a Pydantic class!
@@ -38,11 +39,11 @@ class Athlete(BaseModel):
         Methods:
             introduce(): Prints an introduction of the athlete.
     """
-    first_name: str
-    last_name: str
-    team_code: str
-    disability_class: str
-    medals: list[Medal]
+    first_name: str  # Must be provided
+    last_name: str  # Must be provided
+    team_code: str | None  # Optional, can be None
+    disability_class: str | None  # Optional, can be None
+    medals: list[Medal] = []  # Set to empty as default
 
     def introduce(self) -> str:
         """Prints an introduction of the athlete, including their name, team,
@@ -78,3 +79,16 @@ class ParalympicEvent(BaseModel):
             athlete (Athlete): The athlete to register
         """
         self.athletes.append(athlete)
+
+
+athlete = Athlete(first_name="Yuyan", last_name="Jiang", team_code="CHN",
+                  disability_class=None)
+# print(athlete.introduce())
+
+new_medal = Medal(type=1, date_won=date(2024, 8, 1))
+athlete.medals.append(new_medal)
+
+try:
+    bp = Athlete(first_name="Bianka", medals=1)
+except ValidationError as e:
+    print(e.errors())
