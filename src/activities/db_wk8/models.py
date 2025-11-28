@@ -29,7 +29,7 @@ class Teacher(SQLModel, table=True):
     teacher_email: str
 
     courses: list["Course"] = Relationship(back_populates="teachers", link_model=Enrollment)
-    students: list["Student"] = Relationship(back_populates="teachers", link_model=Enrollment)
+    # students: list["Student"] = Relationship(back_populates="teachers", link_model=Enrollment)
 
 
 class Course(SQLModel, table=True):
