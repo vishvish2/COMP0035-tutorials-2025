@@ -2,8 +2,8 @@ import time
 
 from sqlmodel import Session, select
 
-from activities.starter.db_wk8.models_comparison_n import Games, GamesHost, Host, create_norm_db
-from activities.starter.db_wk8.models_comparison_u import Paralympics, create_db
+from activities.starter.db_wk8.comparison.models_n import Games, GamesHost, Host, create_norm_db
+from activities.starter.db_wk8.comparison.models_u import Paralympics, create_db
 
 
 def measure_query_time(session, stmt, iterations=100):
