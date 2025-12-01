@@ -25,7 +25,7 @@ from typing import List
 from sqlalchemy import Sequence
 from sqlmodel import Session, select
 
-from src.para_app.models import Country, Disability, Games, GamesHost, Host
+from para_app.models import Country, Disability, Games, GamesHost, Host
 
 
 class QueryService:

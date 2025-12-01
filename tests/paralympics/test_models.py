@@ -21,7 +21,6 @@ from sqlalchemy.exc import IntegrityError
 import pytest
 
 from para_app.models import Games
-from tests.paralympics.conftest import session_fixture
 
 
 def test_duration():

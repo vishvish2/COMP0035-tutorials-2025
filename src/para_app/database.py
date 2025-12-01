@@ -156,7 +156,7 @@ def add_data(engine):
             country = session.exec(statement).first()
 
             if not country:
-                print(f"{row['country']} not found in database")
+                # print(f"{row['country']} not found in database")
                 continue
 
             host_val = row.get('host')

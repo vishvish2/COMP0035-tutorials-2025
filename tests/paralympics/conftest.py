@@ -10,23 +10,41 @@ The following tutorial covers testing using only SQLModel:
 from pathlib import Path
 
 import pytest
+from sqlalchemy import StaticPool
 from sqlmodel import SQLModel, Session, create_engine
-from sqlmodel.pool import StaticPool
 
 from para_app.database import add_data, drop_data
+from para_app.models import *
 
 
-# https://sqlmodel.tiangolo.com/tutorial/fastapi/tests/#boilerplate-code
+# Adapted from https://sqlmodel.tiangolo.com/tutorial/fastapi/tests/#boilerplate-code
 # The @pytest.fixture() decorator on top of the function tells pytest this is a fixture function
-@pytest.fixture(scope="session")
-def session_fixture():
-    """ Session fixture for testing the database
+@pytest.fixture(scope="function")
+def engine_fixture():
+    """ Engine fixture for testing the database
 
      This fixture creates:
      - the custom engine
      - the tables
-     - the session
-     Then yields the session object.
+
+     Then yields the engine object. The thing is 'yielded is what will be available to the test
+     functions, i.e. the engine in this case.
+    """
+    engine = create_engine(
+        "sqlite:///:memory:",
+        connect_args={"check_same_thread": False},
+        poolclass=StaticPool,
+        echo=False
+    )
+    SQLModel.metadata.create_all(engine)
+    yield engine
+
+
+@pytest.fixture(scope="function")
+def session_fixture(engine_fixture):
+    """ Session fixture for testing the database
+
+     This fixture takes the engine and then creates and yields the session object.
 
      The thing is 'yield'ed is what will be available to the test function, i.e. the session object.
 
@@ -45,19 +63,12 @@ def session_fixture():
         - once the test function is done, it will continue right after the yield, and will
         close the session object at the end of the 'with' block.
     """
-    db_file = Path(__file__).resolve().parent.joinpath("para_app.db")  # in the tests directory
-    db_url = f"sqlite:///{str(db_file)}"
-    engine = create_engine(
-        db_url,
-        echo=False
-    )
-    SQLModel.metadata.create_all(engine)
-    with Session(engine) as session:
+    with Session(engine_fixture) as session:
         yield session
 
 
 @pytest.fixture(scope="function")
-def db_with_data(session_fixture):
+def db_with_data(engine_fixture):
     """ Re-creates the data in the database for each test function
 
     The data volume is quite small for this database, so all data is being added each time.
@@ -67,6 +78,6 @@ def db_with_data(session_fixture):
     fixture is set to 'function'.
 
     """
-    add_data(session_fixture)
-    yield session_fixture
-    drop_data(session_fixture)
+    add_data(engine_fixture)
+    yield
+    drop_data(engine_fixture)
