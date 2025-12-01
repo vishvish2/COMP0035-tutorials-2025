@@ -22,6 +22,7 @@ Do not use FastAPI for this coursework please, that is in COMP0034.
 """
 from typing import List, Sequence
 
+from sqlalchemy.orm.base import state_str
 from sqlmodel import Session, select
 
 from activities.starter.db_wk8.paralympics.models import Country, Disability, Games, GamesHost, Host  # noqa
@@ -70,34 +71,42 @@ class QueryService:
         """
         with Session(self.engine) as session:
             # Find the country_id
-            stmt = select(Country.id).where(Country.country_name == country_name)
-            country_id = session.exec(stmt).one()
+            stmt = select(Country.id).where(Country.country_name == place_name)
+            country_id = session.exec(stmt).first()
             new_host = Host(place_name=place_name, country_id=country_id)
             session.add(new_host)
             session.commit()
             session.refresh(new_host)
             return new_host
 
+            # add, commit, refresh, resh
 
-    # def read_host(self, host_id: int) -> Host:
-    #     with Session(self.engine) as session:
-    #         # Select and get the first result
-    #
-    #         # Alternatives:
-    #         # host = session.exec(statement).one()  # .one() throws error if more than 1 result
-    #         # host = session.get(Host, host_id)  # Shortcut for getting a row by its id
-    #         pass
-    #
-    # def update_host(self, updated_host: Host) -> Host:
-    #     with Session(self.engine) as session:
-    #         # Add, Commit, Refresh
-    #         pass
+            pass
 
-    # def delete_host(self, host_id: int) -> None:
-    #     """ Find the host that matches the host_id, then delete it """
-    #     with Session(self.engine) as session:
-    #         # Select, Delete, Commit
-    #
+    def read_host(self, host_id: int) -> Host:
+        with Session(self.engine) as session:
+            # Select and get the first result
+            statement = select(Host).where(Host.id == host_id)
+            host = session.exec(statement).first()
+            # Alternatives:
+            # host = session.exec(statement).one()  # .one() throws error if more than 1 result
+            host = session.get(Host, host_id)  # Shortcut for getting a row by its id
+            pass
+
+        def update_host(self, updated_host: Host) -> Host:
+            with Session(self.engine) as session:
+                session.add(updated_host)
+                session.commit()
+                session.refresh(updated_host)
+                return updated_host
+
+        def delete_host(self, host_id: int) -> None:
+            """ Find the host that matches the host_id, then delete it """
+            with Session(self.engine) as session:
+                host = session.exec(select(Host).where(Host.id == host_id)).first()
+                session.delete(host)
+                session.commit()
+        #
     def query_games_year_type(self) -> Sequence[tuple]:
         # 1. List all Paralympics (games) with their year and type. Order by year.
         statement = select(Games.year, Games.event_type).order_by(Games.year)
@@ -115,7 +124,7 @@ class QueryService:
                 WHERE games.event_type = ?
                 ORDER BY games.year
         """
-        statement  = (
+        statement = (
             select(Host.place_name, Games.year)
             .join(Host, Games.hosts)  # using Games.hosts relationship
             .where(Games.event_type == event_type)
@@ -130,7 +139,7 @@ class QueryService:
             .order_by(Games.year)
         )
         with Session(self.engine) as session:
-            result = session.exec(alternative_join_statement).all()
+            result = session.exec(statement).all()
             return result
     #
     # def query_disabilities(self) -> Sequence[tuple]:

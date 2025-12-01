@@ -1,6 +1,6 @@
 """ Model classes for the paralympics database
 
-Follows on from week 8 activity with validators and methods added to Games and Team
+Follows on from week 8 activity with validators and methods added to Games
 
 """
 from datetime import datetime
@@ -57,7 +57,7 @@ class Games(SQLModel, table=True):
     )
 
     # Validators more typically on the Pydantic schema
-    @field_validator("event_type", mode="after")
+    @field_validator("event_type")
     @classmethod
     def validate_event_type(cls, value: str) -> str:
         allowed = ["winter", "summer"]
@@ -66,7 +66,7 @@ class Games(SQLModel, table=True):
             raise ValueError(f"{value} is not in {allowed}")
         return value
 
-    @field_validator("year", mode="after")
+    @field_validator("year")
     @classmethod
     def validate_year(cls, value: int) -> int:
         value = int(value)
