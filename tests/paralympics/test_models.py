@@ -93,7 +93,7 @@ def test_create_games_with_invalid_year_db(session_fixture):
 def test_calculate_ratio_values_present():
     """
     Given a Games instance with values for participants_m and participants_f
-    When the method 'calculate_ratio_values' is called,
+    When the method 'calculate_fm_ratio' is called,
     Then it should return a float representing the ratio of participants_m and participants_f
     """
     pass
@@ -103,7 +103,7 @@ def test_calculate_ratio_values_present():
 def test_calculate_ratio_values_missing():
     """
     Given a Games instance with missing values for participants_m and participants_f
-    When the method 'calculate_ratio_values' is called,
+    When the method 'calculate_fm_ratio' is called,
     Then it should raise a ValueError
     """
     pass
