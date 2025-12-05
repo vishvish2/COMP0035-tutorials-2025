@@ -14,8 +14,11 @@ Before starting, check you:
     - [Python testing in VS Code](https://code.visualstudio.com/docs/python/testing)
 2. Installed `pytest` and `pytest-cov` in your venv `pip install pytest pytest-cov`
 3. [Pytest good practices](https://docs.pytest.org/en/stable/explanation/goodpractices.html) recommends you install your
-   project code in your virtual environment (venv) using `pip install -e .`. Check that you updated your
-   pyproject.toml if you changed your code directory structure or name.
+   project code in your virtual environment (venv) using 
+
+    `pip install -e .` 
+
+    Check that you updated your pyproject.toml if you changed your code directory structure or name.
 
 ## Complete the activities
 
