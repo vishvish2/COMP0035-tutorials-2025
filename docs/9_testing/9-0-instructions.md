@@ -28,4 +28,4 @@ Instructions and activities can be found in the docs/9_testing folder:
 5. [Running tests with GitHub Actions](9-05-ci-github.md)
 6. [Further information](9-06-further.md)
 
-[Next activity]((9-01-introduction.md)
+[Next activity](9-01-introduction.md)
