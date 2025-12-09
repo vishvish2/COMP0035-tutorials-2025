@@ -12,7 +12,7 @@ db_url = f"sqlite:///{str(db_file)}"
 
 engine = create_engine(
     db_url,
-    echo=True
+    echo=False
 )  # Echo=True prints the SQL to the terminal, which can help when debugging.
 
 
@@ -156,7 +156,7 @@ def add_data(engine):
             country = session.exec(statement).first()
 
             if not country:
-                print(f"{row['country']} not found in database")
+                # print(f"{row['country']} not found in database")
                 continue
 
             host_val = row.get('host')
