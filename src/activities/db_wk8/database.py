@@ -117,5 +117,22 @@ def get_teacher():
 def get_students():
     with Session(engine) as session:
         results = session.exec(select(Student.student_name)).all()
-        for teacher in results:
-            print(teacher)
+        for student in results:
+            print(student)
+
+def get_physics_students():
+    with Session(engine) as session:
+        results = session.exec(select(Student.student_name, Student.student_email)
+                               .join(Enrollment).join(Course)
+                               .where(Course.course_name == "Physics")
+                               .order_by(Student.student_name)).all()
+        for student in results:
+            print(student)
+
+def get_courses():
+    with Session(engine) as session:
+        results = session.exec(select(Course)
+                               .join(Enrollment).join(Student)
+                               .where(Student.id == 1)).all()
+        for student in results:
+            print(student)
