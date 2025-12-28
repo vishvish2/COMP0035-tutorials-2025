@@ -105,3 +105,17 @@ def add_all_data():
 
 def drop_db_and_tables():
     SQLModel.metadata.drop_all(engine)
+
+
+def get_teacher():
+    with Session(engine) as session:
+        results = session.exec(select(Teacher).where(Teacher.teacher_name == "Mark Taylor")).all()
+        for teacher in results:
+            print(teacher)
+
+
+def get_students():
+    with Session(engine) as session:
+        results = session.exec(select(Student.student_name)).all()
+        for teacher in results:
+            print(teacher)
