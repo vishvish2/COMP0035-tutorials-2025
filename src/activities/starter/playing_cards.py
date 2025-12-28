@@ -87,7 +87,7 @@ class Deck:
         hand = []
         for i in range(size):
             hand.append(self.draw_card())
-        hand = None  # Deliberate bug!
+        # hand = None  # Deliberate bug!
         return hand
 
 
