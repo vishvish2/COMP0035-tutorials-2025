@@ -30,7 +30,7 @@ def test_suit_returns_suitstring():
     assert type(result) == str
 
 
-def test_deal_hand_return_amount():
+def test_deal_hand_return_amount(deck_cards):
     """ Test that the deal hand returns the correct amount of cards
 
     GIVEN a deck object
@@ -38,9 +38,6 @@ def test_deal_hand_return_amount():
     THEN it should return the amount of cards specified
     """
     # Arrange
-    suit_values = [Suit(suit=s) for s in ['Clubs', 'Diamonds', 'Hearts', 'Spades']]
-    rank_values = [Rank(rank=str(r)) for r in [2, 3, 4, 5, 6, 7, 8, 9, 10, 'Jack', 'Queen', 'King', 'Ace']]
-    deck_cards = Deck(suits=suit_values, ranks=rank_values)
     hand_size = 7
 
     # Act
@@ -51,7 +48,7 @@ def test_deal_hand_return_amount():
     assert len(hand) == hand_size
 
 
-def test_deck_cards_count():
+def test_deck_cards_count(deck_cards):
     """ Test that the deck cards count returns the correct number of cards
 
     This test is not strictly a unit test as it relies on the Suit and Rank classes
@@ -60,17 +57,9 @@ def test_deck_cards_count():
     WHEN the deck is counted
     THEN the result should be 52 cards
     """
-
-    # Arrange: create an instance of a deck
-    suit_values = [Suit(suit=s) for s in ['Clubs', 'Diamonds', 'Hearts', 'Spades']]
-    rank_values = [Rank(rank=str(r)) for r in [2, 3, 4, 5, 6, 7, 8, 9, 10, 'Jack', 'Queen', 'King', 'Ace']]
-    deck_cards = Deck(suits=suit_values, ranks=rank_values)
-
-    # Act: Find the length of deck_cards.deck
-    deck_count = len(deck_cards.deck)
-
-    # Assert: Assert the length is 52
-    assert deck_count == 52
+    # Arrange: deck_cards now comes from the fixture
+    deck_length = len(deck_cards.deck)  # Act
+    assert deck_length == 52  # Assert
 
 
 def test_create_cards_db_raises_on_invalid_path():
