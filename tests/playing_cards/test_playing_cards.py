@@ -7,6 +7,8 @@ from sqlmodel import Session, select
 
 from activities.starter.playing_cards import CardModel, Deck, Rank, Suit, create_cards_db
 
+import pytest, sqlalchemy
+
 
 def test_suit_returns_suitstring():
     """ Test that the suit returns the correct suit and datatype
@@ -65,9 +67,10 @@ def test_deck_cards_count():
     deck_cards = Deck(suits=suit_values, ranks=rank_values)
 
     # Act: Find the length of deck_cards.deck
+    deck_count = len(deck_cards.deck)
 
     # Assert: Assert the length is 52
-    pass  # Remove this line once you add your assertion!
+    assert deck_count == 52
 
 
 def test_create_cards_db_raises_on_invalid_path():
@@ -82,7 +85,8 @@ def test_create_cards_db_raises_on_invalid_path():
     invalid_path = "/data"
 
     # Add test assertion here
-    pass  # Remove this line once you add your assertion!
+    with pytest.raises(sqlalchemy.exc.OperationalError):
+        create_cards_db(invalid_path)
 
 
 def test_select_returns_cards():
