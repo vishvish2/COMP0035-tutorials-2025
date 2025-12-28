@@ -12,7 +12,7 @@ class Location(SQLModel, table=True):
 class Enrollment(SQLModel, table=True):
     student_id: int | None = Field(foreign_key="student.id", primary_key=True)
     course_id: int | None = Field(foreign_key="course.id", primary_key=True)
-    teacher_id: int | None = Field(foreign_key="teacher.id", primary_key=True)
+    teacher_id: int | None = Field(foreign_key="teacher.id", primary_key=True, ondelete="CASCADE")
 
 
 class Student(SQLModel, table=True):
@@ -43,5 +43,3 @@ class Course(SQLModel, table=True):
 
     students: list["Student"] = Relationship(back_populates="courses", link_model=Enrollment)
     teachers: list["Teacher"] = Relationship(back_populates="courses", link_model=Enrollment)
-
-    

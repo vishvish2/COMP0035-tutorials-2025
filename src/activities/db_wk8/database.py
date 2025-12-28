@@ -154,3 +154,15 @@ def get_courses():
                                .where(Student.id == 1)).all()
         for student in results:
             print(student)
+
+def delete_teacher():
+    with Session(engine) as session:
+        # select the row
+        statement = select(Teacher).where(Teacher.teacher_name == "John Smith")
+        results = session.exec(statement)
+        # create the object
+        teacher = results.first()
+        print(teacher)
+        # Delete and commit
+        session.delete(teacher)
+        session.commit()
