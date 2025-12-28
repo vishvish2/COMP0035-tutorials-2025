@@ -90,15 +90,33 @@ def add_all_data():
 
         # Create and add the enrollment objects and add the location FK to the courses
         for _, row in df.iterrows():
-            # Find the ids of the rows
-            location = session.exec(select(Location).where(Location.room == row["course_location"])).first()
-            s_id = session.exec(select(Student.id).where(Student.student_email == row["student_email"])).first()
-            c_id = session.exec(select(Course.id).where(Course.course_code == row["course_code"])).first()
-            t_id = session.exec(select(Teacher.id).where(Teacher.teacher_email == row["teacher_email"])).first()
-            # Update the course with the location using the relationship attribute
+            # # Find the ids of the rows
+            # location = session.exec(select(Location).where(Location.room == row["course_location"])).first()
+            # s_id = session.exec(select(Student.id).where(Student.student_email == row["student_email"])).first()
+            # c_id = session.exec(select(Course.id).where(Course.course_code == row["course_code"])).first()
+            # t_id = session.exec(select(Teacher.id).where(Teacher.teacher_email == row["teacher_email"])).first()
+            # # Update the course with the location using the relationship attribute
+            # course.location = location
+            # # Create the new enrollment for the row
+            # enrollment = Enrollment(student_id=s_id, course_id=c_id, teacher_id=t_id)
+            location = session.exec(
+            select(Location).where(Location.room == row["course_location"])).first()
+
+            student = session.exec(
+                select(Student).where(Student.student_email == row["student_email"])).first()
+
+            course = session.exec(
+                select(Course).where(Course.course_code == row["course_code"])).first()
+
+            teacher = session.exec(
+                select(Teacher).where(Teacher.teacher_email == row["teacher_email"])).first()
+
             course.location = location
-            # Create the new enrollment for the row
-            enrollment = Enrollment(student_id=s_id, course_id=c_id, teacher_id=t_id)
+
+            enrollment = Enrollment(
+                student_id=student.id,
+                course_id=course.id,
+                teacher_id=teacher.id)
             session.add_all([course, enrollment])
             session.commit()
 
