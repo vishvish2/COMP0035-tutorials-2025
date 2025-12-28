@@ -20,6 +20,7 @@ class Student(SQLModel, table=True):
     student_name: str
     student_email: str
 
+    teachers: list["Teacher"] = Relationship(back_populates="students", link_model=Enrollment)
     courses: list["Course"] = Relationship(back_populates="students", link_model=Enrollment)
 
 
@@ -28,8 +29,8 @@ class Teacher(SQLModel, table=True):
     teacher_name: str
     teacher_email: str
 
+    students: list["Student"] = Relationship(back_populates="teachers", link_model=Enrollment)
     courses: list["Course"] = Relationship(back_populates="teachers", link_model=Enrollment)
-    # students: list["Student"] = Relationship(back_populates="teachers", link_model=Enrollment)
 
 
 class Course(SQLModel, table=True):
@@ -38,7 +39,9 @@ class Course(SQLModel, table=True):
     course_code: int
     course_schedule: str | None = None
     location_id: int | None = Field(foreign_key="location.id")
+    location: Location | None = Relationship(back_populates="courses")
 
     students: list["Student"] = Relationship(back_populates="courses", link_model=Enrollment)
     teachers: list["Teacher"] = Relationship(back_populates="courses", link_model=Enrollment)
-    location: "Location" = Relationship(back_populates="courses")
+
+    
