@@ -166,3 +166,20 @@ def delete_teacher():
         # Delete and commit
         session.delete(teacher)
         session.commit()
+
+
+def update_course():
+    with Session(engine) as session:
+        statement = select(Course).where(Course.course_name == "Mathematics")
+        results = session.exec(statement)
+        course = results.one()
+        course.course_code = "MATH102"
+        session.add(course)
+        session.commit()
+
+        statement = select(Teacher)
+        results = session.exec(statement)
+        for teacher in results:
+            teacher.teacher_email = teacher.teacher_email.replace("@school.com", "@newschool.com")
+            session.add(teacher)
+        session.commit()
