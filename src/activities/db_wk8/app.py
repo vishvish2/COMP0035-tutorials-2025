@@ -15,8 +15,8 @@ def main():
     get_students()
     get_physics_students()
     get_courses()
-    # delete_teacher()
-    update_course()
+    delete_teacher()
+    # update_course()
 
 if __name__ == '__main__':
     main()

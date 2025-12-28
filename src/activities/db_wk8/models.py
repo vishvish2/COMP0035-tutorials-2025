@@ -9,19 +9,12 @@ class Location(SQLModel, table=True):
     courses: list["Course"] = Relationship(back_populates="location")
 
 
-class Enrollment(SQLModel, table=True):
-    student_id: int | None = Field(foreign_key="student.id", primary_key=True)
-    course_id: int | None = Field(foreign_key="course.id", primary_key=True)
-    teacher_id: int | None = Field(foreign_key="teacher.id", primary_key=True, ondelete="CASCADE")
-
-
 class Student(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     student_name: str
     student_email: str
 
-    teachers: list["Teacher"] = Relationship(back_populates="students", link_model=Enrollment)
-    courses: list["Course"] = Relationship(back_populates="students", link_model=Enrollment)
+    enrollments: list["Enrollment"] = Relationship(back_populates="student")
 
 
 class Teacher(SQLModel, table=True):
@@ -29,8 +22,7 @@ class Teacher(SQLModel, table=True):
     teacher_name: str
     teacher_email: str
 
-    students: list["Student"] = Relationship(back_populates="teachers", link_model=Enrollment)
-    courses: list["Course"] = Relationship(back_populates="teachers", link_model=Enrollment)
+    enrollments: list["Enrollment"] = Relationship(back_populates="teacher", cascade_delete=True)
 
 
 class Course(SQLModel, table=True):
@@ -41,5 +33,15 @@ class Course(SQLModel, table=True):
     location_id: int | None = Field(foreign_key="location.id")
     location: Location | None = Relationship(back_populates="courses")
 
-    students: list["Student"] = Relationship(back_populates="courses", link_model=Enrollment)
-    teachers: list["Teacher"] = Relationship(back_populates="courses", link_model=Enrollment)
+    enrollments: list["Enrollment"] = Relationship(back_populates="course")
+
+
+class Enrollment(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    student_id: int | None = Field(foreign_key="student.id")
+    course_id: int | None = Field(foreign_key="course.id")
+    teacher_id: int | None = Field(foreign_key="teacher.id", ondelete="CASCADE")
+
+    student: Student = Relationship(back_populates="enrollments")
+    course: Course = Relationship(back_populates="enrollments")
+    teacher: Teacher = Relationship(back_populates="enrollments")
