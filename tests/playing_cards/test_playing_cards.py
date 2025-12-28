@@ -3,11 +3,10 @@
 Note: Some test cases are trivial or contrived, focus on learning how to structure and write the tests rather
 than on what is being tested!
 """
+import pytest, sqlalchemy
 from sqlmodel import Session, select
 
 from activities.starter.playing_cards import CardModel, Deck, Rank, Suit, create_cards_db
-
-import pytest, sqlalchemy
 
 
 def test_suit_returns_suitstring():
@@ -78,7 +77,7 @@ def test_create_cards_db_raises_on_invalid_path():
         create_cards_db(invalid_path)
 
 
-def test_select_returns_cards():
+def test_select_returns_cards(session):
     """ Test that database returns results when the cards table is queried
 
     Not a unit test!
@@ -87,11 +86,8 @@ def test_select_returns_cards():
     WHEN a query is made to the cards table
     THEN it should return a result set with 52 rows
     """
-    db_path = ":memory:"
-    engine = create_cards_db(db_path=db_path)
-    with Session(engine) as session:
-        statement = select(CardModel)
-        result = session.exec(statement)
-        cards = result.all()
-        assert len(cards) == 52
+    statement = select(CardModel)
+    result = session.exec(statement)
+    cards = result.all()
+    assert len(cards) == 52
 
