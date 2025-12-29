@@ -22,7 +22,7 @@ class Teacher(SQLModel, table=True):
     teacher_name: str
     teacher_email: str
 
-    enrollments: list["Enrollment"] = Relationship(back_populates="teacher", cascade_delete=True)
+    enrollments: list["Enrollment"] = Relationship(back_populates="teacher")
 
 
 class Course(SQLModel, table=True):
@@ -40,7 +40,7 @@ class Enrollment(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     student_id: int | None = Field(foreign_key="student.id")
     course_id: int | None = Field(foreign_key="course.id")
-    teacher_id: int | None = Field(foreign_key="teacher.id", ondelete="CASCADE")
+    teacher_id: int | None = Field(foreign_key="teacher.id")
 
     student: Student = Relationship(back_populates="enrollments")
     course: Course = Relationship(back_populates="enrollments")

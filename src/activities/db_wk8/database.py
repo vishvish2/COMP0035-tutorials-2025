@@ -168,6 +168,19 @@ def delete_teacher():
         session.commit()
 
 
+def delete_enrollment():
+    with Session(engine) as session:
+        # select the row
+        statement = select(Enrollment).where((Enrollment.student_id == 1) & (Enrollment.course_id == 1))
+        results = session.exec(statement)
+        # create the object
+        teacher = results.first()
+        print(teacher)
+        # Delete and commit
+        session.delete(teacher)
+        session.commit()
+
+
 def update_course():
     with Session(engine) as session:
         statement = select(Course).where(Course.course_name == "Mathematics")
